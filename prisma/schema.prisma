@@ -12,3 +12,38 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Users {
+  id    String @id @default(cuid())
+  name  String
+  email String @unique
+
+  Links Links[]
+  Auth  Auth?
+
+  @@map("users")
+}
+
+model Links {
+  id    String @id @default(cuid())
+  title String
+  url   String
+  slug  String
+
+  clicks Int @default(0)
+
+  user    Users  @relation(fields: [usersId], references: [id])
+  usersId String
+
+  @@map("links")
+}
+
+model Auth {
+  id    String @id @default(cuid())
+  token String
+
+  user    Users  @relation(fields: [usersId], references: [id])
+  usersId String @unique
+
+  @@map("auth")
+}
