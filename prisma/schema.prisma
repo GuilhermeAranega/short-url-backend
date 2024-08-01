@@ -39,8 +39,9 @@ model Links {
 }
 
 model Auth {
-  id    String @id @default(cuid())
-  token String
+  id         String  @id @default(cuid())
+  token      String
+  successful Boolean @default(false)
 
   user    Users  @relation(fields: [usersId], references: [id])
   usersId String @unique
