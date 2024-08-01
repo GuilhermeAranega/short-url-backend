@@ -31,6 +31,10 @@ export async function createLink(app: FastifyInstance) {
       const data = req.body;
       const tokenData = (await verifyJWT(req, res)) as JWTPayload;
 
+      if (tokenData.userId != data.userId) {
+        throw new Error("Token not validated");
+      }
+
       const user = await prisma.users.findUnique({
         where: { id: data.userId },
       });
