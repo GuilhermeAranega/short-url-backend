@@ -25,10 +25,11 @@ model Users {
 }
 
 model Links {
-  id    String @id @default(cuid())
-  title String
-  url   String
-  slug  String
+  id         String @id @default(cuid())
+  title      String
+  url        String
+  slug       String @unique
+  shortedUrl String @unique @map("shorted_url")
 
   clicks Int @default(0)
 
