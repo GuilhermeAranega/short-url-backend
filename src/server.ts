@@ -12,6 +12,8 @@ import { fastifyJwt } from "@fastify/jwt";
 import { createUser } from "./routes/create-user";
 import { sendEmailAuthenticateUser } from "./routes/send-email-authenticate-user";
 import { authenticateUser } from "./routes/authenticate-user";
+import { createLink } from "./routes/create-link";
+import { redirectLink } from "./routes/redirect-link";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -26,6 +28,9 @@ app.register(fCookie, {
 app.register(createUser);
 app.register(sendEmailAuthenticateUser);
 app.register(authenticateUser);
+
+app.register(createLink);
+app.register(redirectLink);
 
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP Server running on port 3333");
