@@ -15,6 +15,8 @@ import { authenticateUser } from "./routes/authenticate-user";
 import { createLink } from "./routes/create-link";
 import { redirectLink } from "./routes/redirect-link";
 import { getAllLinks } from "./routes/get-all-links";
+import { getLink } from "./routes/get-link";
+import { editLink } from "./routes/edit-link";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -33,6 +35,8 @@ app.register(authenticateUser);
 app.register(createLink);
 app.register(redirectLink);
 app.register(getAllLinks);
+app.register(getLink);
+app.register(editLink);
 
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP Server running on port 3333");
