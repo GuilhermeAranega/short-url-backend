@@ -41,7 +41,7 @@ export async function getAllLinks(app: FastifyInstance) {
       }
 
       const links = await prisma.links.findMany({
-        where: { usersId: tokenData.userId },
+        where: { userId: tokenData.userId },
         select: {
           id: true,
           title: true,
