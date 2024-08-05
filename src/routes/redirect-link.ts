@@ -30,7 +30,7 @@ export async function redirectLink(app: FastifyInstance) {
         data: { clicks: { increment: 1 } },
       });
 
-      return res.redirect(link.url, 301);
+      return res.redirect(link.url, 302);
     }
   );
 }
