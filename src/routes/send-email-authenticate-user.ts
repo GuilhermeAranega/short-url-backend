@@ -36,12 +36,12 @@ export async function sendEmailAuthenticateUser(app: FastifyInstance) {
       });
 
       const existingToken = await prisma.auth.findUnique({
-        where: { usersId: id },
+        where: { userId: id },
       });
 
       if (existingToken) {
         await prisma.auth.delete({
-          where: { usersId: id },
+          where: { userId: id },
         });
       }
 
