@@ -5,11 +5,11 @@ import { z } from "zod";
 
 export async function sendEmailAuthenticateUser(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    "/auth/user/:id",
+    "/auth/user",
     {
       schema: {
-        params: z.object({
-          id: z.string().cuid(),
+        body: z.object({
+          email: z.string().email(),
         }),
         response: {
           201: z.object({
@@ -20,10 +20,10 @@ export async function sendEmailAuthenticateUser(app: FastifyInstance) {
       },
     },
     async (req, res) => {
-      const { id } = req.params;
+      const { email } = req.body;
 
       const user = await prisma.users.findUnique({
-        where: { id },
+        where: { email },
       });
 
       if (!user) {
@@ -36,12 +36,12 @@ export async function sendEmailAuthenticateUser(app: FastifyInstance) {
       });
 
       const existingToken = await prisma.auth.findUnique({
-        where: { userId: id },
+        where: { userId: user.id },
       });
 
       if (existingToken) {
         await prisma.auth.delete({
-          where: { userId: id },
+          where: { userId: user.id },
         });
       }
 
