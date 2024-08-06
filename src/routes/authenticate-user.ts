@@ -14,6 +14,7 @@ export async function authenticateUser(app: FastifyInstance) {
         response: {
           200: z.object({
             message: z.string(),
+            token: z.string(),
           }),
         },
       },
@@ -33,12 +34,6 @@ export async function authenticateUser(app: FastifyInstance) {
         throw new Error("Link already used");
       }
 
-      res.setCookie("token", token.token, {
-        path: "/",
-        httpOnly: true,
-        secure: true,
-      });
-
       await prisma.auth.update({
         where: { id },
         data: { successful: true },
@@ -46,6 +41,7 @@ export async function authenticateUser(app: FastifyInstance) {
 
       return res.status(200).send({
         message: "Login successful",
+        token: token.token,
       });
     }
   );
