@@ -4,7 +4,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
 
 export async function authenticateUser(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().post(
+  app.withTypeProvider<ZodTypeProvider>().get(
     "/auth/:id",
     {
       schema: {
@@ -12,7 +12,7 @@ export async function authenticateUser(app: FastifyInstance) {
           id: z.string().cuid(),
         }),
         response: {
-          201: z.object({
+          200: z.object({
             message: z.string(),
           }),
         },
@@ -44,7 +44,7 @@ export async function authenticateUser(app: FastifyInstance) {
         data: { successful: true },
       });
 
-      return res.status(201).send({
+      return res.status(200).send({
         message: "Login successful",
       });
     }
