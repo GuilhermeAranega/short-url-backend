@@ -62,9 +62,6 @@ export async function editLink(app: FastifyInstance) {
         data,
       });
 
-      console.log(existingLink);
-      console.log(linkDB);
-
       return res.status(201).send({
         message: "Shorted url updated",
       });
