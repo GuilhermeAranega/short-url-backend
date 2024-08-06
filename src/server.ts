@@ -17,8 +17,13 @@ import { redirectLink } from "./routes/redirect-link";
 import { getAllLinks } from "./routes/get-all-links";
 import { getLink } from "./routes/get-link";
 import { editLink } from "./routes/edit-link";
+import fastifyCors from "@fastify/cors";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
+
+app.register(fastifyCors, {
+  origin: "*",
+});
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
