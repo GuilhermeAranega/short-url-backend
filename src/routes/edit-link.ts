@@ -57,7 +57,7 @@ export async function editLink(app: FastifyInstance) {
       data.slug = slug;
       data["shortedUrl"] = shortedUrl;
 
-      const linkDB = await prisma.links.update({
+      await prisma.links.update({
         where: { id },
         data,
       });
