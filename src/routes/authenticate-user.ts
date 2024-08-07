@@ -15,6 +15,7 @@ export async function authenticateUser(app: FastifyInstance) {
           200: z.object({
             message: z.string(),
             token: z.string(),
+            userId: z.string().cuid(),
           }),
         },
       },
@@ -24,6 +25,11 @@ export async function authenticateUser(app: FastifyInstance) {
 
       const token = await prisma.auth.findUnique({
         where: { id },
+        select: {
+          token: true,
+          userId: true,
+          successful: true,
+        },
       });
 
       if (!token) {
@@ -42,6 +48,7 @@ export async function authenticateUser(app: FastifyInstance) {
       return res.status(200).send({
         message: "Login successful",
         token: token.token,
+        userId: token.userId,
       });
     }
   );
