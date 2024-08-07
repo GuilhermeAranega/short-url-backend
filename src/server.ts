@@ -22,7 +22,8 @@ import fastifyCors from "@fastify/cors";
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 app.register(fastifyCors, {
-  origin: "*",
+  origin: "http://localhost:3000",
+  credentials: true,
 });
 
 app.setValidatorCompiler(validatorCompiler);
