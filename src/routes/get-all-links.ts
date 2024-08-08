@@ -24,6 +24,7 @@ export async function getAllLinks(app: FastifyInstance) {
                 shortedUrl: z.string().url(),
               })
               .array(),
+            total: z.number().int(),
           }),
         },
       },
@@ -40,21 +41,27 @@ export async function getAllLinks(app: FastifyInstance) {
         throw new Error("User not found");
       }
 
-      const links = await prisma.links.findMany({
-        where: { userId: tokenData.userId },
-        select: {
-          id: true,
-          title: true,
-          url: true,
-          shortedUrl: true,
-        },
-        take: 10,
-        skip: pageIndex * 10,
-      });
+      const [links, total] = await Promise.all([
+        prisma.links.findMany({
+          where: { userId: tokenData.userId },
+          select: {
+            id: true,
+            title: true,
+            url: true,
+            shortedUrl: true,
+          },
+          take: 10,
+          skip: pageIndex * 10,
+        }),
+        prisma.links.count({
+          where: { userId: tokenData.userId },
+        }),
+      ]);
 
       return res.status(201).send({
         message: "Shorted url created",
         links,
+        total,
       });
     }
   );
