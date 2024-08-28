@@ -41,7 +41,7 @@ export async function getLink(app: FastifyInstance) {
       }
 
       return res.status(201).send({
-        message: "Shorted url created",
+        message: "Shorted url found",
         link,
       });
     }
