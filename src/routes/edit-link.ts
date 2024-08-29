@@ -22,7 +22,7 @@ export async function editLink(app: FastifyInstance) {
           userId: z.string().cuid(),
         }),
         response: {
-          201: z.object({
+          200: z.object({
             message: z.string(),
           }),
         },
