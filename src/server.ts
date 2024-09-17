@@ -18,6 +18,7 @@ import { getAllLinks } from "./routes/get-all-links";
 import { getLink } from "./routes/get-link";
 import { editLink } from "./routes/edit-link";
 import fastifyCors from "@fastify/cors";
+import { deleteLink } from "./routes/delete-link";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -43,6 +44,7 @@ app.register(redirectLink);
 app.register(getAllLinks);
 app.register(getLink);
 app.register(editLink);
+app.register(deleteLink);
 
 app.listen({ port: 3333, host: "0.0.0.0" }).then(() => {
   console.log("HTTP Server running on port 3333");
