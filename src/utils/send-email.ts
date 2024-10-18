@@ -1,4 +1,3 @@
-import { error } from "console";
 import { Resend } from "resend";
 
 export async function sendEmail(email, tokenId) {
